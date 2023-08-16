@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import {
     AuthController,
-    CertificationController,
+    CertificationController, ConnectionController,
     EducationController,
     ExperienceController,
     UserController
@@ -16,6 +16,7 @@ class V1Routes {
     protected experienceController: ExperienceController = new ExperienceController();
     protected educationController: EducationController = new EducationController();
     protected authController: AuthController = new AuthController();
+    protected connectionController: ConnectionController = new ConnectionController();
 
     constructor() {
         this.router = express.Router();
@@ -52,6 +53,12 @@ class V1Routes {
         this.router.get('/education/:id', this.educationController.getById);
         this.router.post('/education', this.educationController.create);
         this.router.put('/education', this.educationController.update);
+
+        // connection routes
+        this.router.get('/connection', this.connectionController.getAll);
+        this.router.get('/connection/:id', this.connectionController.getById);
+        this.router.post('/connection', this.connectionController.create);
+        this.router.put('/connection', this.connectionController.update);
 
         //  auth routes
         this.router.post('/auth/register', this.authController.register);

@@ -30,6 +30,7 @@ class UserController extends ControllerContract {
                     .send({message: "User data not found."});
             }
 
+            console.log("okkkk")
             return res.status(200)
                 .send({data: response, message: "User data retrieved."});
         } catch (err) {
