@@ -1,6 +1,5 @@
 import Kernel from "./app/http/kernel";
 import bootstrapMongo from "./bootstraps/mongo.bootstrap";
-import redisBootstrap from "./bootstraps/redis.bootstrap";
 import Middleware from "./app/http/middlewares/middleware";
 import {v1Route} from "./routes/v1";
 class Server extends Kernel {
@@ -10,7 +9,6 @@ class Server extends Kernel {
         this.registerMiddlewares().register();
         this.registerRoutes();
         bootstrapMongo();
-        // redisBootstrap();
     }
 S
     run(): void {
