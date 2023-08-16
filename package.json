@@ -8,7 +8,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "compile": "tsc -b tsconfig.json",
     "build": "npm run clean && tsc && cp ./package.json dist/package.json",
-    "serve": "tsc && node dist/index.js",
+    "serve": "tsc && node dist/server.js",
     "clean": "rm -rf dist/ || true",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
