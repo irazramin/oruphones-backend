@@ -62,8 +62,6 @@ class UserController extends ControllerContract {
             const existingData = await this.userService.getById(id);
 
             if(!existingData) {
-                 await this.userService.deleteAllAndListCache();
-                console.log("existing",existingData)
                 return res.status(404)
                     .send({message: "User data not found."});
             }

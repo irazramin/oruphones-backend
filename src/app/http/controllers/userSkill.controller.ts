@@ -58,14 +58,6 @@ class UserSkillController extends ControllerContract {
             const {id} = req.params;
 
 
-            // const existingData = await this.userSkillService.getById(id);
-            //
-            // if(!existingData) {
-            //      await this.userSkillService.deleteAllAndListCache();
-            //     console.log("existing",existingData)
-            //     return res.status(404)
-            //         .send({message: "User Skill data not found."});
-            // }
 
             const data = await this.userSkillService.updateMany(body);
 

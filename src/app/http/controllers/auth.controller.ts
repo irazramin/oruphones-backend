@@ -1,13 +1,11 @@
 import {Request, Response} from "express";
 import {config} from "../../utils";
-import CacheService from "../../services/cache.service";
 import {UserService} from "../../services";
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 export default class AuthController {
     private cacheKey = "token";
-    private cacheService = new CacheService();
     private userService = new UserService();
 
     login = async (req: Request, res: Response, next: any) => {
@@ -87,46 +85,6 @@ export default class AuthController {
         }
     }
 
-    me = async (req: Request, res: Response, next: any) => {
-
-        const authorization = req.headers.authorization;
-
-        if (!authorization) {
-            return res.status(401)
-                .send({message: "Authorization header is required."});
-        }
-
-        const authorizationData = authorization.split(' ');
-        const type = authorizationData[0] || '';
-        const token = authorizationData[1] || '';
-
-
-        if (!type || type !== 'Bearer') {
-            return res.status(401)
-                .send({message: "Invalid type. Token type must be Bearer."});
-        }
-
-        jwt.verify(token, config('app.secretKey'), (err, decoded) => {
-            if (err) {
-                return res.status(401)
-                    .send({error: err, message: "Invalid Token"});
-            }
-        });
-
-        let data = await this.cacheService.get(`${this.cacheKey}:${token}`);
-
-
-        if (!data) {
-            return res.status(401)
-                .send({ message: "Invalid Token"});
-        }
-
-        data = JSON.parse(data);
-
-        return res.status(200)
-            .send({data: data, message: "User data retrieved."});
-    }
-
     logout = async (req: Request, res: Response, next: any) => {
         try {
             const token = req.body.token;
@@ -135,8 +93,6 @@ export default class AuthController {
                 return res.status(401)
                     .send({message: "Token is required."});
             }
-
-             await this.cacheService.delete(`${this.cacheKey}:${token}`);
 
             return res.status(200)
                 .send({message: "User is logged out!"});
