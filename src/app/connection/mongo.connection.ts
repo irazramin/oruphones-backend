@@ -12,7 +12,7 @@ const options = {
     dbName: config('db.database')
 };
 
-mongoose.connect(mongoUri)
+mongoose.connect(mongoUri, options)
     .then(() => {
         console.log("Mongo connection")
     })
