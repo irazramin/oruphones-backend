@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+
+  backend:
+    container_name: "backend"
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - backend_node_modules:/app/backend/node_modules
+      - ./backend:/app/backend
+    command: ["npm", "run", "dev"]
+    networks:
+      app_net:
+        aliases:
+          - backend
+
+  mongo:
+    image: "mongo:latest"
+    container_name: "mongo"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=changeme
+    networks:
+      app_net:
+        aliases:
+          - mongo
+
+  redis:
+    image: "redis:latest"
+    container_name: "redis"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    environment:
+      - REDIS_PASSWORD=changeme
+    networks:
+      app_net:
+        aliases:
+          - redis
+
+volumes:
+  mongo_data:
+    driver: "local"
+  redis_data:
+    driver: "local"
+  backend_node_modules:
+    driver: "local"
+
+networks:
+  default:
+  app_net:
+    external: true
