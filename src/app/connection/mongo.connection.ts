@@ -2,7 +2,7 @@ import {config} from "../utils";
 
 import mongoose from 'mongoose';
 
-const mongoUri = `${config('db.connection')}://${config('db.host')}:${config('db.port')}/oruphones`;
+const mongoUri = `${config('db.connection')}://${config('db.host')}:${config('db.port')}`;
 
 const options = {
     autoIndex: true,
