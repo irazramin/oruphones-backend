@@ -69,7 +69,7 @@ class EducationController extends ControllerContract {
 
             const data = await this.educationService.updateMany(body);
 
-            return res.status(201).send({message: 'success', data: data});
+            return res.status(201).send({message: 'success', status: 201});
 
         } catch (err) {
             return res.status(500)
